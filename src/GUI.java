@@ -156,28 +156,9 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	if (sPoly1.matches("[0-9].[0-9]") || sPoly2.matches("[0-9].[0-9]")) {
-	    String[] sTemp;
-	    sTemp = sPoly1.split(",");
-	    Double[] Poly1 = new Double[sTemp.length];
-	    for (int i = 0; i < sTemp.length; i++) {
-		try {
-		    Poly1[i] = new Double(sTemp[i]);
-		} catch (NumberFormatException e) {
-		    JOptionPane.showMessageDialog(this, "Please check 1st"
-						  + " Polynomial coefficients!",
-						  "Error",
-						  JOptionPane.ERROR_MESSAGE);
-		    return false;
-		}
-	    }
-
-	    if (match = sPoly1.matches(",")) {
-		JOptionPane.showMessageDialog(this, "Please check 1st"
-					      + " Polynomial format!",
-					      "Error",
-					      JOptionPane.ERROR_MESSAGE);
-	    }
-	    pPoly1 = new RealPoly(Poly1);
+	    JOptionPane.showMessageDialog(this, "Only integer polynomial supported!",
+					  "Error", JOptionPane.ERROR_MESSAGE);
+	    return false;
 	} else {
 	    String[] sTemp;
 	    sTemp = sPoly1.split(",");
@@ -201,26 +182,9 @@ public class GUI extends JFrame implements ActionListener {
 	    pPoly1= new IntegerPoly(Poly1);
 	}
 	if (sPoly2.matches("[0-9].[0-9]") || sPoly2.matches("[0-9].[0-9]")) {
-	    String[] sTemp;
-	    sTemp = sPoly2.split(",");
-	    Double[] Poly2 = new Double[sTemp.length];
-	    for (int i = 0; i < sTemp.length; i++) {
-		try {
-		    Poly2[i] = new Double(sTemp[i]);
-		} catch (NumberFormatException e) {
-		    JOptionPane.showMessageDialog(this, "Please check 2nd"
-						  + "Polynomial coefficients!",
-						  "Error",
-						  JOptionPane.ERROR_MESSAGE);
-		    return false;
-		}
-	    }
-	    if (match = sPoly2.matches(",")) {
-		JOptionPane.showMessageDialog(this, "Please check 2nd Polynomial"
-					      + " format!",
-					      "Error", JOptionPane.ERROR_MESSAGE);
-	    }
-	    pPoly2 = new RealPoly(Poly2);
+	    JOptionPane.showMessageDialog(this, "Only integer polynomials supported!",
+					  "Error", JOptionPane.ERROR_MESSAGE);
+	    return false;
 	} else {
 	    String[] sTemp;
 	    sTemp = sPoly2.split(",");
