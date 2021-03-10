@@ -14,34 +14,209 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.javatuples.Pair;
 
 /**
- * The class Polynomial is an abstract class containing abstract
- * methods for operations with polynomial.
+ * The class Polynomial a class representing a polynomial.
  *
  * @author Erhard Muresan
  */
-public abstract class Polynomial implements PolyOps<Polynomial> {
+public class Polynomial implements PolyOps {
 
+    private List<Monomial> terms;
 
-    /**
-     * Verifies if the given polynomial has all the coefficients Zero
-     *
-     * @return true if all coefficients are zero, false otherwise
-     */
-    public abstract boolean isZero();
+    public Polynomial(List<Monomial> terms) {
+	this.terms = terms;
+    }
 
-    /**
-     * Computes the polynomial degree
-     *
-     * @return the degree of the polynomial
-     */
-    public abstract Integer degree();
+    public Polynomial add(Polynomial poly) {
+	List<Monomial> polyCopy = new ArrayList<>(poly.terms);
+	List<Monomial> thisCopy = new ArrayList<>(terms);
+	List<Monomial> polyVisited = new ArrayList<>();
+	List<Monomial> thisVisited = new ArrayList<>();
+	List<Monomial> result = new ArrayList<>();
 
-    /**
-     * The String representation of a Polynomial
-     *
-     * @return a polynomial in the form of: aX^n + bX^n-1... + y
-     */
-    public abstract String toString();
+	thisCopy.forEach( first -> {
+		polyCopy.forEach( second -> {
+			if ( first.exponent() == second.exponent() ) {
+			    result.add(first.add(second));
+			    thisVisited.add(first);
+			    polyVisited.add(second);
+			}
+		    });
+	    });
+	thisCopy.removeAll(thisVisited);
+	polyCopy.removeAll(polyVisited);
+	result.addAll(polyCopy);
+	result.addAll(thisCopy);
+	Polynomial pResult =new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
+
+    public Polynomial subtract(Polynomial poly) {
+	List<Monomial> polyCopy = new ArrayList<>();
+	List<Monomial> thisCopy = new ArrayList<>(terms);
+	List<Monomial> polyVisited = new ArrayList<>();
+	List<Monomial> thisVisited = new ArrayList<>();
+	List<Monomial> result = new ArrayList<>();
+
+	poly.terms.forEach( mon -> {
+		polyCopy.add(new Monomial(-mon.coefficient(), mon.exponent()));
+	    });
+	thisCopy.forEach( first -> {
+		polyCopy.forEach( second -> {
+			if ( first.exponent() == second.exponent() ) {
+			    result.add(first.add(second));
+			    thisVisited.add(first);
+			    polyVisited.add(second);
+			}
+		    });
+	    });
+	thisCopy.removeAll(thisVisited);
+	polyCopy.removeAll(polyVisited);
+	result.addAll(thisCopy);
+	result.addAll(polyCopy);
+	Polynomial pResult =new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
+
+    public Polynomial multiply(Polynomial poly) {
+	List<Monomial> polyCopy = new ArrayList<>(poly.terms);
+	List<Monomial> thisCopy = new ArrayList<>(terms);
+	List<Monomial> result = new ArrayList<>();
+
+	thisCopy.forEach(first -> {
+		polyCopy.forEach(second -> {
+			Monomial mon = first.multiply(second);
+			result.add(mon);
+		    });
+	    });
+	Polynomial pResult = new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
+
+    public Pair<Polynomial, Polynomial> divide(Polynomial poly) throws IllegalArgumentException {
+	this.collapse();
+	poly.collapse();
+	Polynomial dividend = this;
+	Polynomial divisor = poly;
+	Polynomial quotient;
+	Polynomial remainder;
+	Polynomial temp;
+	Pair<Polynomial,Polynomial> result;
+
+	if ( divisor.isZero() ) {
+	    throw new IllegalArgumentException("Divisor polynomial should not be zero(0)!");
+	}
+	List<Monomial> zeroTerms = new ArrayList<>();
+	zeroTerms.add(new Monomial(0,0));
+	quotient = new Polynomial(zeroTerms);
+	remainder = dividend;
+	while ( !remainder.isZero() && (remainder.degree() >= poly.degree()) ) {
+	    temp = remainder.singleTermDivide(divisor);
+	    quotient = quotient.add(temp);
+	    remainder = remainder.subtract(temp.multiply(divisor));
+	}
+	quotient.collapse();
+	remainder.collapse();
+	result = Pair.with(quotient,remainder);
+	return result;
+    }
+
+    public boolean isZero() {
+	boolean zero = true;;
+	if ( terms.isEmpty() ) {
+	    zero = true;
+	} else {
+	    for ( Monomial term : terms ) {
+		if ( term.coefficient() != 0 ) {
+		    zero = false;
+		}
+		if ( term.exponent() != 0 ) {
+		    zero = false;
+		}
+	    }
+	}
+	return zero;
+    }
+
+    public int degree() {
+	int max = terms.get(0).exponent();
+	for (Monomial term : terms) {
+	    if ( term.exponent() > max ) {
+		max = term.exponent();
+	    }
+	}
+	return max;
+    }
+
+    public String toString() {
+	this.collapse();
+	String output = new String("");
+	for (Monomial term : terms) {
+	    output = new String(output + term.toString());
+	}
+	return output;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (obj instanceof Polynomial) {
+	    Polynomial another = (Polynomial) obj;
+	    if ( this.terms.equals(another.terms) ) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    private Monomial lead() {
+	Monomial lead = terms.get(0);
+	for (Monomial term : terms) {
+	    if ( term.exponent() > lead.exponent() ) {
+		lead = term;
+	    }
+	}
+	return lead;
+    }
+
+    private void collapse() {
+	List<Monomial> visited = new ArrayList<>();
+	List<Monomial> zero = new ArrayList<>();
+	List<Monomial> result = new ArrayList<>();
+
+	terms.forEach(term -> {
+		terms.forEach(term2 -> {
+			if ( term != term2 ) {
+			    if ( term.exponent() == term2.exponent() ) {
+				term.add(term2);
+				term2.zero();
+			    }
+			}
+		    });
+	    });
+
+	terms.forEach(term -> {
+		if ( term.coefficient() == 0 ) {
+		    zero.add(term);
+		}
+	    });
+	terms.removeAll(zero);
+	Collections.sort(terms);
+	Collections.reverse(terms);
+    }
+
+    private Polynomial singleTermDivide(Polynomial poly) throws IllegalArgumentException {
+	List<Monomial> result = new ArrayList<>();
+
+	result.add(this.lead().divide(poly.lead()));
+	return new Polynomial(result);
+    }
 }

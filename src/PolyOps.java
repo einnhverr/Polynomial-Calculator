@@ -16,12 +16,14 @@
  */
 import org.javatuples.Pair;
 
+import java.util.Collection;
+
 /**
  * Interface for operations with polynomials.
  *
  * @author Erhard Muresan
  */
-public interface PolyOps<T> {
+public interface PolyOps {
 
     /**
      * This method adds a polynomial to the current one
@@ -29,7 +31,7 @@ public interface PolyOps<T> {
      * @param poly - which polynomial it adds with
      * @return the resulting polynomial
      */
-    public T add(T poly);
+    public Polynomial add(Polynomial poly);
 
     /**
      * This method subtracts the current polynomial
@@ -37,7 +39,7 @@ public interface PolyOps<T> {
      * @param poly - which polynomial it subtracts with
      * @return the resulting polynomial
      */
-    public T subtract(T poly);
+    public Polynomial subtract(Polynomial poly);
 
     /**
      * This method multiplies the current polynomial
@@ -45,21 +47,23 @@ public interface PolyOps<T> {
      * @param poly - which polynomial it multiplies with
      * @return	the resulting polynomial
      */
-    public T multiply(T poly);
+    public Polynomial multiply(Polynomial poly);
 
     /**
-     * This method divides the current polynomial
+     * This method divides the current polynomial.
      *
      * @param poly - which polynomial it divides to
      * @return a tuple with following representation (Quotient, Remainder)
      */
-    public Pair<T,T> divide(T poly) throws IllegalArgumentException;
+    public Pair<Polynomial,Polynomial> divide(Polynomial poly) throws IllegalArgumentException;
 
     /**
-     * This method expands(to power) the current polynomial
+     * This method return true if the polynomial has no terms or each of its
+     * terms have the coefficient and the exponent 0(zero).
      *
-     * @param poly - which polynomial it expands to
-     * @return the resulting polynomial
+     * @return true if no terms or zero value(coefficient or exponent) terms
      */
-    public T expand(T poly);
+    public boolean isZero();
+
+    public int degree();
 }

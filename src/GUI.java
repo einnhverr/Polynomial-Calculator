@@ -18,6 +18,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -162,10 +164,12 @@ public class GUI extends JFrame implements ActionListener {
 	} else {
 	    String[] sTemp;
 	    sTemp = sPoly1.split(",");
-	    Integer[] Poly1 = new Integer[sTemp.length];
+	    Monomial current;
+	    List<Monomial> terms = new ArrayList<>();
 	    for (int i = 0; i < sTemp.length; i++) {
 		try {
-		    Poly1[i] = new Integer(sTemp[i]);
+		    current = new Monomial(new Integer(sTemp[i]), new Integer(i));
+		    terms.add(current);
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(this, "Please check 1st"
 						  + " Polynomial coefficients!",
@@ -179,7 +183,7 @@ public class GUI extends JFrame implements ActionListener {
 					      + " format!",
 					      "Error", JOptionPane.ERROR_MESSAGE);
 	    }
-	    pPoly1= new IntegerPoly(Poly1);
+	    pPoly1 = new Polynomial(terms);
 	}
 	if (sPoly2.matches("[0-9].[0-9]") || sPoly2.matches("[0-9].[0-9]")) {
 	    JOptionPane.showMessageDialog(this, "Only integer polynomials supported!",
@@ -188,10 +192,12 @@ public class GUI extends JFrame implements ActionListener {
 	} else {
 	    String[] sTemp;
 	    sTemp = sPoly2.split(",");
-	    Integer[] Poly2 = new Integer[sTemp.length];
+	    Monomial current;
+	    List<Monomial> terms = new ArrayList<>();
 	    for (int i = 0; i < sTemp.length; i++) {
 		try {
-		    Poly2[i] = new Integer(sTemp[i]);
+		    current = new Monomial(new Integer(sTemp[i]), new Integer(i));
+		    terms.add(current);
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(this, "Please check 2nd"
 						  + "Polynomial coefficients!",
@@ -205,7 +211,7 @@ public class GUI extends JFrame implements ActionListener {
 					      + "format!", "Error",
 					      JOptionPane.ERROR_MESSAGE);
 	    }
-	    pPoly2= new IntegerPoly(Poly2);
+	    pPoly2= new Polynomial(terms);
 	}
 	return true;
     }
@@ -273,27 +279,25 @@ public class GUI extends JFrame implements ActionListener {
 		if (firstOpSecond.isSelected()) {
 		    try {
 			divPolyResult = pPoly1.divide(pPoly2);
-			tResult.setText("Q: " + divPolyResult.getValue0().toString()
-					+ "R: "+divPolyResult.getValue1().toString());
+			tResult.setText("Q: " + divPolyResult.getValue0().toString() +
+					" R: "+divPolyResult.getValue1().toString());
 		    } catch (StringIndexOutOfBoundsException e) {
 			tResult.setText("0");
 		    } catch (IllegalArgumentException e2) {
-			JOptionPane.showMessageDialog(this, "Dividend's degree "
-						      + " has to be equal or greater"
-						      + " than divisors'", "Error",
+			e2.printStackTrace();
+			JOptionPane.showMessageDialog(this, e2.getMessage(), "Error",
 						      JOptionPane.ERROR_MESSAGE);
 		    }
 		} else if (secondOpFirst.isSelected()) {
 		    try {
 			divPolyResult = pPoly2.divide(pPoly1);
-			tResult.setText("Q: " + divPolyResult.getValue0().toString()
-					+ "R: " + divPolyResult.getValue1().toString());
+			tResult.setText("Q: " + divPolyResult.getValue0().toString() +
+					" R: " + divPolyResult.getValue1().toString());
 		    } catch (StringIndexOutOfBoundsException e) {
 			tResult.setText("0");
 		    } catch (IllegalArgumentException e2) {
-			JOptionPane.showMessageDialog(this, "Dividend's degree"
-						      + " has to be equal or greater"
-						      + " than divisors'", "Error",
+			e2.printStackTrace();
+			JOptionPane.showMessageDialog(this, e2.getMessage(), "Error",
 						      JOptionPane.ERROR_MESSAGE);
 		    }
 		}
