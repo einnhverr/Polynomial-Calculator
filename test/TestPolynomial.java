@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import org.einnhverr.pt.polynomials.model.Monomial;
+import org.einnhverr.pt.polynomials.model.Polynomial;
 import static org.junit.Assert.*;
 import junit.framework.TestCase;
 import org.junit.*;
@@ -132,6 +134,8 @@ public class TestPolynomial extends TestCase{
 	poly_negative = null;
 	poly_positive = null;
 	poly_one = null;
+	expected = null;
+	actual = null;
     }
 
     @Test
@@ -225,7 +229,7 @@ public class TestPolynomial extends TestCase{
     @Test
     public void testAddition_p_zero_q_nonzero() {
 
-	// 5x^3 - x^2 + 6
+	// x^1 - 4
 	terms = new ArrayList<>();
 	current = new Monomial(1, 1);
 	terms.add(current);
@@ -233,14 +237,14 @@ public class TestPolynomial extends TestCase{
 	terms.add(current);
 	expected = new Polynomial(terms);
 	//actual = zero.add(poly_p);
-	actual = zero.add(poly_q);
+	actual = emptyZero.add(poly_q);
 	assertEquals(expected, actual);
     }
 
     @Test
     public void testAddition_p_nonzero_q_zero() {
 
-	// x^1 - 4
+	// 5x^3 - x^2 + 6
 	terms = new ArrayList<>();
 	current = new Monomial(5, 3);
 	terms.add(current);
@@ -249,7 +253,7 @@ public class TestPolynomial extends TestCase{
 	current = new Monomial(6, 0);
 	terms.add(current);
 	expected = new Polynomial(terms);
-	actual = poly_p.add(zero);
+	actual = poly_p.add(emptyZero);
 	assertEquals(expected, actual);
     }
 
@@ -382,6 +386,20 @@ public class TestPolynomial extends TestCase{
 	Pair<Polynomial,Polynomial> actual;
 	actual = poly_x.divide(poly_y);
 	assertEquals(expected.toString(), actual.toString());
+    }
+
+    @Test
+    public void testDifferentiate() {
+
+	// 15x^2 - 2x^1
+	terms = new ArrayList<>();
+	current = new Monomial(15, 2);
+	terms.add(current);
+	current = new Monomial(-2, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = poly_p.differentiate();
+	assertEquals(expected, actual);
     }
 
     @Test

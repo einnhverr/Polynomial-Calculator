@@ -14,9 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import org.javatuples.Pair;
+package org.einnhverr.pt.polynomials.model;
 
 import java.util.Collection;
+
+import org.javatuples.Pair;
 
 /**
  * Interface for operations with polynomials.
@@ -56,6 +58,13 @@ public interface PolyOps {
      * @return a tuple with following representation (Quotient, Remainder)
      */
     public Pair<Polynomial,Polynomial> divide(Polynomial poly) throws IllegalArgumentException;
+
+    /**
+     * This method computes the derivatie of the polynomial.
+     *
+     * @return the derivate of the polynomial
+     */
+    public Polynomial differentiate();
 
     /**
      * This method return true if the polynomial has no terms or each of its

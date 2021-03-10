@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.einnhverr.pt.polynomials.model;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -130,8 +132,21 @@ public class Polynomial implements PolyOps {
 	return result;
     }
 
+    public Polynomial differentiate() {
+	List<Monomial> copyThis = new ArrayList<>(terms);
+	List<Monomial> result = new ArrayList<>();
+
+	for ( Monomial term : copyThis ) {
+	    Monomial mon = term.differentiate();
+	    result.add(mon);
+	}
+	Polynomial pResult = new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
+
     public boolean isZero() {
-	boolean zero = true;;
+	boolean zero = true;
 	if ( terms.isEmpty() ) {
 	    zero = true;
 	} else {

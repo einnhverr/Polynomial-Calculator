@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package org.einnhverr.pt.polynomials.model;
 
 /**
  * The class Monomial represents a polynomial with only one term.
@@ -75,6 +76,13 @@ public class Monomial implements Comparable<Monomial> {
 	    throw new IllegalArgumentException("Dividend should be divisible by divisor");
 	}
 	return new Monomial(result, exponent - monomial.exponent);
+    }
+
+    public Monomial differentiate() {
+	if ( exponent == 0 ) {
+	    return new Monomial(0, 0);
+	}
+	return new Monomial(coefficient * exponent, exponent - 1);
     }
 
     public void zero() {
