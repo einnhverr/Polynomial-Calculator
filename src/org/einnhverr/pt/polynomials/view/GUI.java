@@ -72,6 +72,9 @@ public class GUI extends JFrame {
     private JRadioButton secondOpFirst;
     private ButtonGroup op;
 
+    // select operand order
+    private boolean initialOperandOrder;
+
     public GUI() {
 	initGUI();
     }
@@ -93,6 +96,7 @@ public class GUI extends JFrame {
 	op.add(firstOpSecond);
 	op.add(secondOpFirst);
 	firstOpSecond.setSelected(true);
+	initialOperandOrder = true;
 	poly1Panel = new JPanel();
 	poly1Panel.setLayout(new FlowLayout());
 	poly1Panel.add(lPoly1);
@@ -137,6 +141,10 @@ public class GUI extends JFrame {
 	return tPoly2.getText();
     }
 
+    public boolean getInitialOperandOrder() {
+	return initialOperandOrder;
+    }
+
     public void setResult(String result) {
 	tResult.setText(result);
     }
@@ -168,5 +176,7 @@ public class GUI extends JFrame {
     }
 
     public void addOperandSelectionListener(ActionListener listener) {
+	firstOpSecond.addActionListener(listener);
+	secondOpFirst.addActionListener(listener);
     }
 }

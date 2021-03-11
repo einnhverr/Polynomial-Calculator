@@ -14,7 +14,7 @@
   <property name="test.dir" value="test"/>
   <property name="report.dir" value="reports"/>
 
-  <property name="main-class" value="PolynomialsApplication"/>
+  <property name="main-class" value="PolynomialApplication"/>
 
   <path id="classpath">
     <fileset dir="${lib.dir}" includes="**/*.jar"/>

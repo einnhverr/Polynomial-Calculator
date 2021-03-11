@@ -38,6 +38,8 @@ public class PolynomialController {
     private String sPoly1;
     private String sPoly2;
 
+    private boolean switchSelection;
+
     public PolynomialController(GUI view) {
 	this.view = view;
 
@@ -48,6 +50,10 @@ public class PolynomialController {
 	view.addDivideListener(new DividePolynomialListener());
 	view.addDifferentiateListener(new DifferentiatePolynomialListener());
 	view.addIntegrateListener(new IntegratePolynomialListener());
+	view.addOperandSelectionListener(new OperandSelectionListener());
+
+	// set initial operand order
+	switchSelection = view.getInitialOperandOrder();
     }
 
     private boolean queryData() {
@@ -117,10 +123,14 @@ public class PolynomialController {
 	public void actionPerformed(ActionEvent e) {
 	    if( !queryData() ) {
 		return;
-	    } else {
-		result = poly1.add(poly2);
-		view.setResult(result.toString());
 	    }
+	    if ( switchSelection ) {
+		result = poly1.add(poly2);
+
+	    } else {
+		result = poly2.add(poly1);
+	    }
+	    view.setResult(result.toString());
 	}
     }
 
@@ -129,10 +139,12 @@ public class PolynomialController {
 	    if ( !queryData() ) {
 		return;
 	    }
-	    else {
+	    if ( switchSelection ) {
 		result = poly1.subtract(poly2);
-		view.setResult(result.toString());
+	    } else {
+		result = poly2.subtract(poly1);
 	    }
+	    view.setResult(result.toString());
 	}
     }
 
@@ -140,10 +152,13 @@ public class PolynomialController {
 	public void actionPerformed(ActionEvent e) {
 	    if ( !queryData() ) {
 		return;
-	    } else {
-		result = poly1.multiply(poly2);
-		view.setResult(result.toString());
 	    }
+	    if ( switchSelection ) {
+		result = poly1.multiply(poly2);
+	    } else {
+		result = poly2.multiply(poly1);
+	    }
+	    view.setResult(result.toString());
 	}
     }
 
@@ -151,22 +166,40 @@ public class PolynomialController {
 	public void actionPerformed(ActionEvent e) {
 	    if ( !queryData() ) {
 		return;
-	    } else {
-		Pair<Polynomial,Polynomial> resultD;
-		resultD = poly1.divide(poly2);
-		view.setResult("Q: " + resultD.getValue0().toString() +
-			       " R: " + resultD.getValue1().toString());
 	    }
+	    Pair<Polynomial,Polynomial> resultD;
+	    if ( switchSelection ) {
+		try {
+		    resultD = poly1.divide(poly2);
+		} catch (IllegalArgumentException ex) {
+		    view.showError(ex.getMessage());
+		    return;
+		}
+	    } else {
+		try {
+		    resultD = poly2.divide(poly1);
+		} catch (IllegalArgumentException ex) {
+		    view.showError(ex.getMessage());
+		    return;
+		}
+	    }
+	    view.setResult("Q: " + resultD.getValue0().toString() +
+			   " R: " + resultD.getValue1().toString());
 	}
     }
 
     class DifferentiatePolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    if ( !queryData() ) {
-	    } else {
-		result = poly1.differentiate();
-		view.setResult(result.toString());
+		return;
 	    }
+	    if ( switchSelection ) {
+		result = poly1.differentiate();
+
+	    } else {
+		result = poly2.differentiate();
+	    }
+	    view.setResult(result.toString());
 	}
     }
 
@@ -177,6 +210,7 @@ public class PolynomialController {
 
     class OperandSelectionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
+	    switchSelection = !switchSelection;
 	}
     }
 }
