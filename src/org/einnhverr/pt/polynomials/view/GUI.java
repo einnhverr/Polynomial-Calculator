@@ -69,6 +69,7 @@ public class GUI extends JFrame {
     private JButton multiply;
     private JButton divide;
     private JButton differentiate;
+    private JButton integrate;
     private JRadioButton firstOpSecond;
     private JRadioButton secondOpFirst;
     private ButtonGroup op;
@@ -92,6 +93,7 @@ public class GUI extends JFrame {
 	multiply = new JButton("*");
 	divide = new JButton("/");
 	differentiate = new JButton("d");
+	integrate = new JButton("i");
 	firstOpSecond = new JRadioButton("1[OP]2");
 	secondOpFirst = new JRadioButton("2[OP]1");
 	op = new ButtonGroup();
@@ -122,6 +124,7 @@ public class GUI extends JFrame {
 	buttonsPanel.add(multiply);
 	buttonsPanel.add(divide);
 	buttonsPanel.add(differentiate);
+	buttonsPanel.add(integrate);
 	mainPanel = new JPanel();
 	BoxLayout mainLayout = new BoxLayout(mainPanel, BoxLayout.Y_AXIS);
 	mainPanel.setLayout(mainLayout);
@@ -177,6 +180,7 @@ public class GUI extends JFrame {
     }
 
     public void addIntegrateListener(ActionListener listener) {
+	integrate.addActionListener(listener);
     }
 
     public void addOperandSelectionListener(ActionListener listener) {

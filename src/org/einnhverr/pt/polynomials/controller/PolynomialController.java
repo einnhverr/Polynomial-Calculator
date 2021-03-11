@@ -205,6 +205,15 @@ public class PolynomialController {
 
     class IntegratePolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
+	    if ( !queryData() ) {
+		return;
+	    }
+	    if ( switchSelection ) {
+		result = poly1.integrate();
+	    } else {
+		result = poly2.integrate();
+	    }
+	    view.setResult(result.toString());
 	}
     }
 

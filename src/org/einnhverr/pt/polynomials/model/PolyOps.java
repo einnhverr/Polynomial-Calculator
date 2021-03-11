@@ -67,6 +67,13 @@ public interface PolyOps {
     public Polynomial differentiate();
 
     /**
+     * This method integrates the current polynomial.
+     *
+     * @return the resulting integrated polynomial
+     */
+    public Polynomial integrate();
+
+    /**
      * This method return true if the polynomial has no terms or each of its
      * terms have the coefficient and the exponent 0(zero).
      *

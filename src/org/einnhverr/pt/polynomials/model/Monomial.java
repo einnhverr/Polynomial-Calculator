@@ -16,6 +16,8 @@
  */
 package org.einnhverr.pt.polynomials.model;
 
+import java.util.Objects;
+
 /**
  * The class Monomial represents a polynomial with only one term.
  *
@@ -23,10 +25,10 @@ package org.einnhverr.pt.polynomials.model;
  */
 public class Monomial implements Comparable<Monomial> {
 
-    private int coefficient;
+    private double coefficient;
     private int exponent;
 
-    public Monomial(int coefficient, int exponent) {
+    public Monomial(double coefficient, int exponent) {
 	this.coefficient = coefficient;
 	this.exponent = exponent;
     }
@@ -45,7 +47,7 @@ public class Monomial implements Comparable<Monomial> {
      *
      * @retrun the coefficient of the monomial
      */
-    public int coefficient() {
+    public double coefficient() {
 	return coefficient;
     }
 
@@ -70,11 +72,7 @@ public class Monomial implements Comparable<Monomial> {
 		throw new IllegalArgumentException("Divisor should not be zero(0)");
 	    }
 	}
-	int result = coefficient / monomial.coefficient;
-	int remainder = coefficient % monomial.coefficient;
-	if ( remainder != 0 ) {
-	    throw new IllegalArgumentException("Dividend should be divisible by divisor");
-	}
+	double result = coefficient / monomial.coefficient;
 	return new Monomial(result, exponent - monomial.exponent);
     }
 
@@ -83,6 +81,12 @@ public class Monomial implements Comparable<Monomial> {
 	    return new Monomial(0, 0);
 	}
 	return new Monomial(coefficient * exponent, exponent - 1);
+    }
+
+    public Monomial integrate() {
+	int newexponent = exponent + 1;
+	double newcoefficient = coefficient / newexponent;
+	return new Monomial(newcoefficient, newexponent);
     }
 
     public void zero() {
@@ -105,14 +109,15 @@ public class Monomial implements Comparable<Monomial> {
 
     @Override
     public int hashCode() {
-	return exponent;
+	return Objects.hash(coefficient, exponent);
     }
 
     @Override
     public int compareTo(Monomial monomial) {
 	int result = 0;
+	double temp;
 	if (exponent - monomial.exponent == 0) {
-	    result = coefficient - monomial.coefficient;
+	    return 0;
 	} else {
 	    result = exponent - monomial.exponent;
 	}
@@ -121,17 +126,17 @@ public class Monomial implements Comparable<Monomial> {
 
     @Override
     public String toString() {
-	String output = "";
+	String output = String.format("");
 	if ( coefficient == 0 ) {
-	    output = output + "";
+	    output = String.format(output + "");
 	} else if ( coefficient == 1 ) {
-	    output = output + "+";
+	    output = String.format(output + "+");
 	} else if ( coefficient > 0 ) {
-	    output = output + "+" + coefficient;
+	    output = String.format(output + "+" + "%.2f", coefficient);
 	} else {
-	    output = output + coefficient;
+	    output = String.format(output + "%.2f", coefficient);
 	}
-	output = output + "X^" + exponent;
+	output = String.format(output + "X^" + exponent);
 
 	return output;
     }

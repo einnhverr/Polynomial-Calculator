@@ -403,6 +403,22 @@ public class TestPolynomial extends TestCase{
     }
 
     @Test
+    public void testIntegrate() {
+
+	// 5/4x^4 - 1/3x^3 + 6x
+	terms = new ArrayList<>();
+	current = new Monomial(5.0/4.0, 4);
+	terms.add(current);
+	current = new Monomial(-1.0/3.0, 3);
+	terms.add(current);
+	current = new Monomial(6, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = poly_p.integrate();
+	assertEquals(expected, actual);
+    }
+
+    @Test
     public void testZero() {
 	assertTrue(emptyZero.isZero());
 	assertTrue(zero.isZero());
@@ -470,6 +486,6 @@ public class TestPolynomial extends TestCase{
 	current = new Monomial(-7, 0);
 	terms.add(current);
 	Polynomial poly = new Polynomial(terms);
-	assertEquals("+7X^3+X^1-1X^0", poly.toString());
+	assertEquals("+7.00X^3+X^1-1.00X^0", poly.toString());
     }
 }

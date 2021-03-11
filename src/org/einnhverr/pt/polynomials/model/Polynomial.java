@@ -145,6 +145,19 @@ public class Polynomial implements PolyOps {
 	return pResult;
     }
 
+    public Polynomial integrate() {
+	List<Monomial> copyThis = new ArrayList<>(terms);
+	List<Monomial> result = new ArrayList<>();
+
+	for ( Monomial term : copyThis ) {
+	    Monomial mon = term.integrate();
+	    result.add(mon);
+	}
+	Polynomial pResult = new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
+
     public boolean isZero() {
 	boolean zero = true;
 	if ( terms.isEmpty() ) {
