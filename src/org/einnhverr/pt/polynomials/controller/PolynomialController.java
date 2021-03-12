@@ -159,9 +159,9 @@ public class PolynomialController {
 		return;
 	    }
 	    if ( switchSelection ) {
-		result = poly1.multiply(poly2);
+		result = op.multiply(poly1, poly2);
 	    } else {
-		result = poly2.multiply(poly1);
+		result = op.multiply(poly2, poly1);
 	    }
 	    view.setResult(result.toString());
 	}

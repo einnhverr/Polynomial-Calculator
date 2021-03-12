@@ -28,14 +28,6 @@ import org.javatuples.Pair;
 public interface PolyOps {
 
     /**
-     * This method multiplies the current polynomial
-     *
-     * @param poly - which polynomial it multiplies with
-     * @return	the resulting polynomial
-     */
-    public Polynomial multiply(Polynomial poly);
-
-    /**
      * This method divides the current polynomial.
      *
      * @param poly - which polynomial it divides to

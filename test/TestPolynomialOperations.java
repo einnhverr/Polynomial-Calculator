@@ -411,4 +411,151 @@ public class TestPolynomialOperations extends TestCase {
 	actual = op.subtract(poly_p, poly_one);
 	assertEquals(expected, actual);
     }
+
+    @Test
+    public void testMultiplication_q_less_than_p() {
+
+	// 5x^4 - 21x^3 + 4x^2 +6x - 24
+	terms = new ArrayList<>();
+	current = new Monomial(5, 4);
+	terms.add(current);
+	current = new Monomial(-21, 3);
+	terms.add(current);
+	current = new Monomial(4, 2);
+	terms.add(current);
+	current = new Monomial(6, 1);
+	terms.add(current);
+	current = new Monomial(-24, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_p, poly_q);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_less_than_q() {
+
+	// 5x^4 - 21x^3 + 4x^2 +6x - 24
+	terms = new ArrayList<>();
+	current = new Monomial(5, 4);
+	terms.add(current);
+	current = new Monomial(-21, 3);
+	terms.add(current);
+	current = new Monomial(4, 2);
+	terms.add(current);
+	current = new Monomial(6, 1);
+	terms.add(current);
+	current = new Monomial(-24, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_q, poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_equals_q() {
+
+	// 25x^6 - 10x^5 + x^4 + 60x^3 - 12x^2 + 36
+	terms = new ArrayList<>();
+	current = new Monomial(25, 6);
+	terms.add(current);
+	current = new Monomial(-10, 5);
+	terms.add(current);
+	current = new Monomial(1, 4);
+	terms.add(current);
+	current = new Monomial(60, 3);
+	terms.add(current);
+	current = new Monomial(-12, 2);
+	terms.add(current);
+	current = new Monomial(36, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_p, poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_positive_q_negative() {
+
+	// -5x^4 - 21x^3 - 4x^2 - 6x^1 - 24
+	terms = new ArrayList<>();
+	current = new Monomial(-5, 4);
+	terms.add(current);
+	current = new Monomial(-21, 3);
+	terms.add(current);
+	current = new Monomial(-4, 2);
+	terms.add(current);
+	current = new Monomial(-6, 1);
+	terms.add(current);
+	current = new Monomial(-24, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_positive, poly_negative);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_negative_q_positive() {
+
+	// -5x^4 - 21x^3 - 4x^2 - 6x^1 - 24
+	terms = new ArrayList<>();
+	current = new Monomial(-5, 4);
+	terms.add(current);
+	current = new Monomial(-21, 3);
+	terms.add(current);
+	current = new Monomial(-4, 2);
+	terms.add(current);
+	current = new Monomial(-6, 1);
+	terms.add(current);
+	current = new Monomial(-24, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_negative, poly_positive);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_zero_q_nonzero() {
+
+	// 0
+	actual = op.multiply(emptyZero, poly_q);
+	assertTrue(actual.isZero());
+    }
+
+    @Test
+    public void testMultiplication_p_nonzero_q_zero() {
+
+	// 0
+	actual = op.multiply(poly_p, zero);
+	assertTrue(actual.isZero());
+    }
+
+    @Test
+    public void testMultiplication_p_one_q_notone() {
+
+	// x - 4
+	terms = new ArrayList<>();
+	current = new Monomial(1, 1);
+	terms.add(current);
+	current = new Monomial(-4, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_one, poly_q);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testMultiplication_p_notone_q_one() {
+
+	// 5x^3 - x^2 + 6
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(6, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.multiply(poly_p, poly_one);
+    }
 }

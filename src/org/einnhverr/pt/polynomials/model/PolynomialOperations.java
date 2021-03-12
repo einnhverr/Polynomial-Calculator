@@ -89,4 +89,25 @@ public class PolynomialOperations {
 	pResult.collapse();
 	return pResult;
     }
+
+    /**
+     * This method multiplies two polynomials
+     *
+     * @param poly1 - first polynomial
+     * @param poly2 - second polynomial
+     * @return resulting new polynomial
+     */
+    public Polynomial multiply(Polynomial poly1, Polynomial poly2) {
+	List<Monomial> result = new ArrayList<>();
+
+	poly1.getPolynomialTerms().forEach( first -> {
+		poly2.getPolynomialTerms().forEach( second -> {
+			result.add(new Monomial(first.coefficient() * second.coefficient(),
+						first.exponent() + second.exponent()));
+		    });
+	    });
+	Polynomial pResult = new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
 }

@@ -144,25 +144,6 @@ public class TestPolynomial extends TestCase{
     }
 
     @Test
-    public void testMultiplication() {
-	// 5x^4 - 19x^3 + 4x^2 + 6x - 24
-	terms = new ArrayList<>();
-	current = new Monomial(5, 4);
-	terms.add(current);
-	current = new Monomial(-21, 3);
-	terms.add(current);
-	current = new Monomial(4, 2);
-	terms.add(current);
-	current = new Monomial(6, 1);
-	terms.add(current);
-	current = new Monomial(-24, 0);
-	terms.add(current);
-	expected = new Polynomial(terms);
-	actual = poly_p.multiply(poly_q);
-	assertEquals(expected, actual);
-    }
-
-    @Test
     public void testDivision() {
 	fail();
 	// x^2 - 9x - 10

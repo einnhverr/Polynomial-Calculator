@@ -19,6 +19,7 @@ package org.einnhverr.pt.polynomials.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.javatuples.Pair;
 
@@ -33,22 +34,6 @@ public class Polynomial implements PolyOps {
 
     public Polynomial(List<Monomial> terms) {
 	this.terms = terms;
-    }
-
-    public Polynomial multiply(Polynomial poly) {
-	List<Monomial> polyCopy = new ArrayList<>(poly.terms);
-	List<Monomial> thisCopy = new ArrayList<>(terms);
-	List<Monomial> result = new ArrayList<>();
-
-	thisCopy.forEach(first -> {
-		polyCopy.forEach(second -> {
-			Monomial mon = first.multiply(second);
-			result.add(mon);
-		    });
-	    });
-	Polynomial pResult = new Polynomial(result);
-	pResult.collapse();
-	return pResult;
     }
 
     public Pair<Polynomial, Polynomial> divide(Polynomial poly) throws IllegalArgumentException {
@@ -175,8 +160,11 @@ public class Polynomial implements PolyOps {
 	terms.forEach(term -> {
 		terms.forEach(term2 -> {
 			if ( term != term2 ) {
-			    if ( term.exponent() == term2.exponent() ) {
-				term.add(term2);
+			    if ( term.exponent() == term2.exponent()
+				 && term.coefficient() != 0 && term2.coefficient() != 0) {
+				result.add(new Monomial(term.coefficient() + term2.coefficient(),
+								term.exponent()));
+				term.zero();
 				term2.zero();
 			    }
 			}
@@ -189,6 +177,7 @@ public class Polynomial implements PolyOps {
 		}
 	    });
 	terms.removeAll(zero);
+	terms.addAll(result);
 	Collections.sort(terms);
 	Collections.reverse(terms);
     }

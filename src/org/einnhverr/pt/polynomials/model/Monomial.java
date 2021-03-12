@@ -51,21 +51,6 @@ public class Monomial implements Comparable<Monomial> {
 	return coefficient;
     }
 
-    public Monomial add(Monomial monomial) {
-	coefficient = coefficient + monomial.coefficient;
-	return this;
-    }
-
-    public Monomial subtract(Monomial monomial) {
-	coefficient = coefficient - monomial.coefficient;
-	return this;
-    }
-
-    public Monomial multiply(Monomial monomial) {
-	return new Monomial(coefficient * monomial.coefficient,
-			    exponent + monomial.exponent);
-    }
-
     public Monomial divide(Monomial monomial) throws IllegalArgumentException {
 	if ( monomial.exponent == 0 ) {
 	    if ( monomial.coefficient == 0 ) {
