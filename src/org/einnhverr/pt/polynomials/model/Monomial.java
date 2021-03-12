@@ -51,12 +51,6 @@ public class Monomial implements Comparable<Monomial> {
 	return coefficient;
     }
 
-    public Monomial integrate() {
-	int newexponent = exponent + 1;
-	double newcoefficient = coefficient / newexponent;
-	return new Monomial(newcoefficient, newexponent);
-    }
-
     public void zero() {
 	coefficient = 0;
 	exponent = 0;

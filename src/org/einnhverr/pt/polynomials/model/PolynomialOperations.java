@@ -175,6 +175,22 @@ public class PolynomialOperations {
 	return new Polynomial(result);
     }
 
+    /**
+     * This method integrate a polynomial
+     *
+     * @param polynomial - the inpus polynomial
+     * @return the resulting integrated polynomial
+     */
+    public Polynomial integrate(Polynomial polynomial) {
+	List<Monomial> result = new ArrayList<>();
+
+	polynomial.getPolynomialTerms().forEach( monomial -> {
+		result.add(new Monomial(monomial.coefficient() / (monomial.exponent() + 1),
+					monomial.exponent() + 1));
+	    });
+	return new Polynomial(result);
+    }
+
     private Polynomial leadTermDivide(Polynomial poly1, Polynomial poly2) throws IllegalArgumentException {
 	List<Monomial> result = new ArrayList<>();
 	if (poly2.lead().exponent() == 0 && poly2.lead().coefficient() == 0) {

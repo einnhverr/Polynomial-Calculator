@@ -699,4 +699,34 @@ public class TestPolynomialOperations extends TestCase {
 	actual = op.differentiate(poly_q);
 	assertEquals(expected, actual);
     }
+
+    @Test
+    public void testIntegration_p() {
+
+	// 5/4x^4 - 1/3x^3 + 6x
+	terms = new ArrayList<>();
+	current = new Monomial(5.0/4.0, 4);
+	terms.add(current);
+	current = new Monomial(-1.0/3.0, 3);
+	terms.add(current);
+	current = new Monomial(6, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.integrate(poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testIntegration_q() {
+
+	// 1/2x^2 - 4x
+	terms = new ArrayList<>();
+	current = new Monomial(1.0/2.0, 2);
+	terms.add(current);
+	current = new Monomial(-4, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.integrate(poly_q);
+	assertEquals(expected, actual);
+    }
 }

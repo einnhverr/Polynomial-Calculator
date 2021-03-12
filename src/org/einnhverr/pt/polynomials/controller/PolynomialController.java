@@ -214,9 +214,9 @@ public class PolynomialController {
 		return;
 	    }
 	    if ( switchSelection ) {
-		result = poly1.integrate();
+		result = op.integrate(poly1);
 	    } else {
-		result = poly2.integrate();
+		result = op.integrate(poly2);
 	    }
 	    view.setResult(result.toString());
 	}
