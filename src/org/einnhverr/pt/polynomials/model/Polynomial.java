@@ -28,7 +28,7 @@ import org.javatuples.Pair;
  *
  * @author Erhard Muresan
  */
-public class Polynomial implements PolyOps {
+public class Polynomial {
 
     private List<Monomial> terms;
 
