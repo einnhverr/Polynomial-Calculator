@@ -28,14 +28,6 @@ import org.javatuples.Pair;
 public interface PolyOps {
 
     /**
-     * This method divides the current polynomial.
-     *
-     * @param poly - which polynomial it divides to
-     * @return a tuple with following representation (Quotient, Remainder)
-     */
-    public Pair<Polynomial,Polynomial> divide(Polynomial poly) throws IllegalArgumentException;
-
-    /**
      * This method computes the derivatie of the polynomial.
      *
      * @return the derivate of the polynomial

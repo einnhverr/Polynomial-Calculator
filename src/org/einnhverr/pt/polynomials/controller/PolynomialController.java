@@ -175,14 +175,14 @@ public class PolynomialController {
 	    Pair<Polynomial,Polynomial> resultD;
 	    if ( switchSelection ) {
 		try {
-		    resultD = poly1.divide(poly2);
+		    resultD = op.divide(poly1, poly2);
 		} catch (IllegalArgumentException ex) {
 		    view.showError(ex.getMessage());
 		    return;
 		}
 	    } else {
 		try {
-		    resultD = poly2.divide(poly1);
+		    resultD = op.divide(poly2, poly1);
 		} catch (IllegalArgumentException ex) {
 		    view.showError(ex.getMessage());
 		    return;

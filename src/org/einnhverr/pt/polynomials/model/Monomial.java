@@ -51,16 +51,6 @@ public class Monomial implements Comparable<Monomial> {
 	return coefficient;
     }
 
-    public Monomial divide(Monomial monomial) throws IllegalArgumentException {
-	if ( monomial.exponent == 0 ) {
-	    if ( monomial.coefficient == 0 ) {
-		throw new IllegalArgumentException("Divisor should not be zero(0)");
-	    }
-	}
-	double result = coefficient / monomial.coefficient;
-	return new Monomial(result, exponent - monomial.exponent);
-    }
-
     public Monomial differentiate() {
 	if ( exponent == 0 ) {
 	    return new Monomial(0, 0);

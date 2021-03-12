@@ -36,34 +36,6 @@ public class Polynomial implements PolyOps {
 	this.terms = terms;
     }
 
-    public Pair<Polynomial, Polynomial> divide(Polynomial poly) throws IllegalArgumentException {
-	this.collapse();
-	poly.collapse();
-	Polynomial dividend = this;
-	Polynomial divisor = poly;
-	Polynomial quotient;
-	Polynomial remainder;
-	Polynomial temp;
-	Pair<Polynomial,Polynomial> result;
-
-	if ( divisor.isZero() ) {
-	    throw new IllegalArgumentException("Divisor polynomial should not be zero(0)!");
-	}
-	List<Monomial> zeroTerms = new ArrayList<>();
-	zeroTerms.add(new Monomial(0,0));
-	quotient = new Polynomial(zeroTerms);
-	remainder = dividend;
-	// while ( !remainder.isZero() && (remainder.degree() >= poly.degree()) ) {
-	//     temp = remainder.singleTermDivide(divisor);
-	//     quotient = quotient.add(temp);
-	//     remainder = remainder.subtract(temp.multiply(divisor));
-	// }
-	quotient.collapse();
-	remainder.collapse();
-	result = Pair.with(quotient,remainder);
-	return result;
-    }
-
     public Polynomial differentiate() {
 	List<Monomial> copyThis = new ArrayList<>(terms);
 	List<Monomial> result = new ArrayList<>();
@@ -137,7 +109,7 @@ public class Polynomial implements PolyOps {
 	return false;
     }
 
-    private Monomial lead() {
+    public Monomial lead() {
 	Monomial lead = terms.get(0);
 	for (Monomial term : terms) {
 	    if ( term.exponent() > lead.exponent() ) {
@@ -180,12 +152,5 @@ public class Polynomial implements PolyOps {
 	terms.addAll(result);
 	Collections.sort(terms);
 	Collections.reverse(terms);
-    }
-
-    private Polynomial singleTermDivide(Polynomial poly) throws IllegalArgumentException {
-	List<Monomial> result = new ArrayList<>();
-
-	result.add(this.lead().divide(poly.lead()));
-	return new Polynomial(result);
     }
 }

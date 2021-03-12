@@ -17,6 +17,7 @@
 import org.einnhverr.pt.polynomials.model.Monomial;
 import org.einnhverr.pt.polynomials.model.Polynomial;
 import org.einnhverr.pt.polynomials.model.PolynomialOperations;
+
 import static org.junit.Assert.*;
 import junit.framework.TestCase;
 import org.junit.*;
@@ -24,6 +25,8 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.javatuples.Pair;
 
 public class TestPolynomialOperations extends TestCase {
 
@@ -557,5 +560,117 @@ public class TestPolynomialOperations extends TestCase {
 	terms.add(current);
 	expected = new Polynomial(terms);
 	actual = op.multiply(poly_p, poly_one);
+    }
+
+    @Test
+    public void testDivision_q_less_than_p() {
+
+	// 5x^2 + 19x + 76
+	terms = new ArrayList<>();
+	current = new Monomial(5, 2);
+	terms.add(current);
+	current = new Monomial(19, 1);
+	terms.add(current);
+	current = new Monomial(76, 0);
+	terms.add(current);
+	Polynomial quotient = new Polynomial(terms);
+
+	// 310
+	terms = new ArrayList<>();
+	current = new Monomial(310, 0);
+	terms.add(current);
+	Polynomial remainder = new Polynomial(terms);
+	Pair<Polynomial, Polynomial> expected = new Pair(quotient, remainder);
+	Pair<Polynomial, Polynomial> actual = op.divide(poly_p, poly_q);
+	assertEquals(expected.getValue0(), actual.getValue0());
+	assertEquals(expected.getValue1(), actual.getValue1());
+    }
+
+    @Test
+    public void testDivision_p_less_then_q() {
+
+	// 0
+	Polynomial quotient = emptyZero;
+
+	// x - 4
+	terms = new ArrayList<>();
+	current = new Monomial(1, 1);
+	terms.add(current);
+	current = new Monomial(-4, 0);
+	terms.add(current);
+	Polynomial remainder = new Polynomial(terms);
+	Pair<Polynomial, Polynomial> expected = new Pair(quotient, remainder);
+	Pair<Polynomial, Polynomial> actual = op.divide(poly_q, poly_p);
+	assertEquals(expected.getValue0(), actual.getValue0());
+	assertEquals(expected.getValue1(), actual.getValue1());
+    }
+
+    @Test
+    public void testDivision_p_nonzero_q_emptyZero() {
+	try {
+	    op.divide(poly_p, emptyZero);
+	    fail("Expected an IllegalArgumentException to be thrown");
+	} catch (IllegalArgumentException e) {
+	    assertTrue(true);
+	}
+    }
+
+    @Test
+    public void testDivision_p_nonzero_q_zero() {
+	try {
+	    op.divide(poly_p, zero);
+	    fail("Expected an IllegalArgumentException to be thrown");
+	} catch (IllegalArgumentException e) {
+	    assertTrue(true);
+	}
+    }
+
+    @Test
+    public void testDivision_p_zero_q_nonzero() {
+
+	// 0
+	// 0
+	Pair<Polynomial, Polynomial> expected = new Pair(zero, zero);
+	Pair<Polynomial, Polynomial> actual = op.divide(zero, poly_q);
+	assertEquals(expected.getValue0(), actual.getValue0());
+	assertEquals(expected.getValue1(), actual.getValue1());
+    }
+
+    @Test
+    public void testDivision_p_one_q_notone() {
+
+	// 0
+	Polynomial quotient = emptyZero;
+
+	// 1
+	terms = new ArrayList<>();
+	current = new Monomial(1, 0);
+	terms.add(current);
+	Polynomial remainder = new Polynomial(terms);
+	Pair<Polynomial, Polynomial> expected = new Pair(quotient, remainder);
+	Pair<Polynomial, Polynomial> actual = op.divide(poly_one, poly_q);
+	assertEquals(expected.getValue0(), actual.getValue0());
+	assertEquals(expected.getValue1(), actual.getValue1());
+    }
+
+    @Test
+    public void testDivision_p_notone_q_one() {
+
+	// 5x^3 - x^2 + 6
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(6, 0);
+	terms.add(current);
+	Polynomial quotient = new Polynomial(terms);
+
+	// 0
+	Polynomial remainder = emptyZero;
+	Pair<Polynomial, Polynomial> expected = new Pair(quotient, remainder);
+	Pair<Polynomial, Polynomial> actual = op.divide(poly_p, poly_one);
+	assertEquals(expected.getValue0(), actual.getValue0());
+	assertEquals(expected.getValue1(), actual.getValue1());
     }
 }
