@@ -53,4 +53,40 @@ public class PolynomialOperations {
 	pResult.collapse();
 	return pResult;
     }
+
+    /**
+     * This method subtracts two polynomials
+     *
+     * @param poly1 - first polynomial
+     * @param poly2 - second polynomial
+     * @return resulting new polynomial
+     */
+    public Polynomial subtract(Polynomial poly1, Polynomial poly2) {
+	List<Monomial> poly1Copy = new ArrayList<>(poly1.getPolynomialTerms());
+	List<Monomial> poly2Copy = new ArrayList<>(poly2.getPolynomialTerms());
+	List<Monomial> poly1Visited = new ArrayList<>();
+	List<Monomial> poly2Visited = new ArrayList<>();
+	List<Monomial> result = new ArrayList<>();
+
+	poly1Copy.forEach( first -> {
+		poly2Copy.forEach( second -> {
+			if ( first.exponent() == second.exponent() ) {
+			    result.add(new Monomial(first.coefficient() - second.coefficient(),
+						    first.exponent()));
+			    poly1Visited.add(first);
+			    poly2Visited.add(second);
+			}
+		    });
+	    });
+	poly1Copy.removeAll(poly1Visited);
+	poly2Copy.removeAll(poly2Visited);
+	result.addAll(poly1Copy);
+
+	poly2Copy.forEach( mon -> {
+		result.add(new Monomial(-mon.coefficient(), mon.exponent()));
+	    });
+	Polynomial pResult = new Polynomial(result);
+	pResult.collapse();
+	return pResult;
+    }
 }

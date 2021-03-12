@@ -35,34 +35,6 @@ public class Polynomial implements PolyOps {
 	this.terms = terms;
     }
 
-    public Polynomial subtract(Polynomial poly) {
-	List<Monomial> polyCopy = new ArrayList<>();
-	List<Monomial> thisCopy = new ArrayList<>(terms);
-	List<Monomial> polyVisited = new ArrayList<>();
-	List<Monomial> thisVisited = new ArrayList<>();
-	List<Monomial> result = new ArrayList<>();
-
-	poly.terms.forEach( mon -> {
-		polyCopy.add(new Monomial(-mon.coefficient(), mon.exponent()));
-	    });
-	thisCopy.forEach( first -> {
-		polyCopy.forEach( second -> {
-			if ( first.exponent() == second.exponent() ) {
-			    result.add(first.add(second));
-			    thisVisited.add(first);
-			    polyVisited.add(second);
-			}
-		    });
-	    });
-	thisCopy.removeAll(thisVisited);
-	polyCopy.removeAll(polyVisited);
-	result.addAll(thisCopy);
-	result.addAll(polyCopy);
-	Polynomial pResult =new Polynomial(result);
-	pResult.collapse();
-	return pResult;
-    }
-
     public Polynomial multiply(Polynomial poly) {
 	List<Monomial> polyCopy = new ArrayList<>(poly.terms);
 	List<Monomial> thisCopy = new ArrayList<>(terms);
@@ -96,12 +68,11 @@ public class Polynomial implements PolyOps {
 	zeroTerms.add(new Monomial(0,0));
 	quotient = new Polynomial(zeroTerms);
 	remainder = dividend;
-	while ( !remainder.isZero() && (remainder.degree() >= poly.degree()) ) {
-	    temp = remainder.singleTermDivide(divisor);
-	    // WIP
-	    //quotient = quotient.add(temp);
-	    remainder = remainder.subtract(temp.multiply(divisor));
-	}
+	// while ( !remainder.isZero() && (remainder.degree() >= poly.degree()) ) {
+	//     temp = remainder.singleTermDivide(divisor);
+	//     quotient = quotient.add(temp);
+	//     remainder = remainder.subtract(temp.multiply(divisor));
+	// }
 	quotient.collapse();
 	remainder.collapse();
 	result = Pair.with(quotient,remainder);

@@ -145,9 +145,9 @@ public class PolynomialController {
 		return;
 	    }
 	    if ( switchSelection ) {
-		result = poly1.subtract(poly2);
+		result = op.subtract(poly1, poly2);
 	    } else {
-		result = poly2.subtract(poly1);
+		result = op.subtract(poly2, poly1);
 	    }
 	    view.setResult(result.toString());
 	}

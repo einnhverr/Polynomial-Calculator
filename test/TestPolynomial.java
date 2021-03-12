@@ -144,23 +144,6 @@ public class TestPolynomial extends TestCase{
     }
 
     @Test
-    public void testSubtraction() {
-	// 5x^3 - x^2 - x + 10
-	terms = new ArrayList<>();
-	current = new Monomial(5, 3);
-	terms.add(current);
-	current = new Monomial(-1, 2);
-	terms.add(current);
-	current = new Monomial(-1, 1);
-	terms.add(current);
-	current = new Monomial(10, 0);
-	terms.add(current);
-	expected = new Polynomial(terms);
-	actual = poly_p.subtract(poly_q);
-	assertEquals(expected, actual);
-    }
-
-    @Test
     public void testMultiplication() {
 	// 5x^4 - 19x^3 + 4x^2 + 6x - 24
 	terms = new ArrayList<>();
@@ -181,6 +164,7 @@ public class TestPolynomial extends TestCase{
 
     @Test
     public void testDivision() {
+	fail();
 	// x^2 - 9x - 10
 	terms = new ArrayList<>();
 	current = new Monomial(1, 2);
@@ -218,7 +202,7 @@ public class TestPolynomial extends TestCase{
 
     @Test
     public void testDivision_odd() {
-
+	fail();
 	// q = 4x^2 - x - 7
 	terms = new ArrayList<>();
 	current = new Monomial(4, 2);

@@ -288,4 +288,127 @@ public class TestPolynomialOperations extends TestCase {
 	actual = op.add(poly_p, poly_one);
 	assertEquals(expected, actual);
     }
+
+    @Test
+    public void testSubtraction_q_less_than_p() {
+
+	// -5x^3 + x^2 + x - 10
+	terms = new ArrayList<>();
+	current = new Monomial(-5, 3);
+	terms.add(current);
+	current = new Monomial(1, 2);
+	terms.add(current);
+	current = new Monomial(1, 1);
+	terms.add(current);
+	current = new Monomial(-10, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_q, poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_less_than_q() {
+
+	//5x^3 - x^2 - x + 10
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(-1, 1);
+	terms.add(current);
+	current = new Monomial(10, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_p, poly_q);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_equals_q() {
+
+	// emptyZero
+	expected = emptyZero;
+	actual = op.subtract(poly_p, poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_positive_q_negative() {
+
+	// 5x^3 + x^2 + x + 10
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(1, 2);
+	terms.add(current);
+	current = new Monomial(1, 1);
+	terms.add(current);
+	current = new Monomial(10, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_positive, poly_negative);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_zero_q_nonzero() {
+
+	// -x + 4
+	terms = new ArrayList<>();
+	current = new Monomial(-1, 1);
+	terms.add(current);
+	current = new Monomial(4, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(emptyZero, poly_q);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_nonzero_q_zero() {
+
+	// 5x^3 - x^2 + 6
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(6, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_p, emptyZero);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_one_q_notone() {
+
+	// -x + 5
+	terms = new ArrayList<>();
+	current = new Monomial(-1, 1);
+	terms.add(current);
+	current = new Monomial(5, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_one, poly_q);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testSubtraction_p_notone_q_one() {
+
+	// 5x^3 - x^2 + 5
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(5, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.subtract(poly_p, poly_one);
+	assertEquals(expected, actual);
+    }
 }
