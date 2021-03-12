@@ -88,18 +88,19 @@ public class Monomial implements Comparable<Monomial> {
 
     @Override
     public String toString() {
-	String output = String.format("");
+	StringBuilder output = new StringBuilder();
 	if ( coefficient == 0 ) {
-	    output = String.format(output + "");
 	} else if ( coefficient == 1 ) {
-	    output = String.format(output + "+");
+	    output.append("+");
 	} else if ( coefficient > 0 ) {
-	    output = String.format(output + "+" + "%.2f", coefficient);
+	    output.append("+");
+	    output.append(String.format("%.2f", coefficient));
 	} else {
-	    output = String.format(output + "%.2f", coefficient);
+	    output.append(String.format("%.2f", coefficient));
 	}
-	output = String.format(output + "X^" + exponent);
+	output.append("X^");
+	output.append(exponent);
 
-	return output;
+	return output.toString();
     }
 }

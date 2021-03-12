@@ -66,13 +66,16 @@ public class Polynomial {
 	return max;
     }
 
+    @Override
     public String toString() {
 	this.collapse();
-	String output = new String("");
-	for (Monomial term : terms) {
-	    output = new String(output + term.toString());
-	}
-	return output;
+
+	StringBuilder output = new StringBuilder();
+	terms.forEach( term -> {
+		output.append(term);
+	    });
+
+	return output.toString();
     }
 
     @Override
