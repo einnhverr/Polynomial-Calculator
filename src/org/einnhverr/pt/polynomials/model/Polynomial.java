@@ -21,10 +21,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import org.javatuples.Pair;
 
 /**
- * The class Polynomial a class representing a polynomial.
+ * The class Polynomial represents a polynomial.
  *
  * @author Erhard Muresan
  */
@@ -34,6 +33,10 @@ public class Polynomial {
 
     public Polynomial(List<Monomial> terms) {
 	this.terms = terms;
+    }
+
+    public Polynomial(String stringPolynomial) {
+	this.terms = Parser.parsePolynomial(stringPolynomial).getPolynomialTerms();
     }
 
     public boolean isZero() {

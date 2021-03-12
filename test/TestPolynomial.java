@@ -17,6 +17,7 @@
 import org.einnhverr.pt.polynomials.model.Monomial;
 import org.einnhverr.pt.polynomials.model.Polynomial;
 import org.einnhverr.pt.polynomials.model.PolynomialOperations;
+
 import static org.junit.Assert.*;
 import junit.framework.TestCase;
 import org.junit.*;
@@ -24,8 +25,6 @@ import org.junit.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.javatuples.Pair;
 
 public class TestPolynomial extends TestCase{
 
@@ -141,6 +140,46 @@ public class TestPolynomial extends TestCase{
 	poly_one = null;
 	expected = null;
 	actual = null;
+    }
+
+    @Test
+    public void testContructorFromValidString() {
+
+	// 5x^3 - x^2 + 6
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(6, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = new Polynomial("5x^3-x^2+6");
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testConstructorFromPartiallyInvalidString() {
+
+	//absdbc3x^2abd-8Xabcd
+	terms = new ArrayList<>();
+	current = new Monomial(3, 2);
+	terms.add(current);
+	current = new Monomial(-8, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = new Polynomial("absdbc3x^2abd-8Xabcd");
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testContructorFromInvalidString() {
+
+	// asdbc
+	terms = new ArrayList<>();
+	expected = new Polynomial(terms);
+	actual = new Polynomial("asdbc");
+	assertEquals(expected, actual);
     }
 
     @Test
