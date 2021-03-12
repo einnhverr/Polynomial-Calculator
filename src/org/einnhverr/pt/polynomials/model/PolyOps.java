@@ -28,13 +28,6 @@ import org.javatuples.Pair;
 public interface PolyOps {
 
     /**
-     * This method computes the derivatie of the polynomial.
-     *
-     * @return the derivate of the polynomial
-     */
-    public Polynomial differentiate();
-
-    /**
      * This method integrates the current polynomial.
      *
      * @return the resulting integrated polynomial

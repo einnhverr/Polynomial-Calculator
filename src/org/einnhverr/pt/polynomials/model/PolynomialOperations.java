@@ -156,6 +156,25 @@ public class PolynomialOperations {
 	return result;
     }
 
+    /**
+     * This method computes the derivative of the polynomial.
+     *
+     * @param polynomial - the input polynomial
+     * @return the derivative of the polynomial
+     */
+    public Polynomial differentiate(Polynomial polynomial) {
+	List<Monomial> result = new ArrayList<>();
+
+	polynomial.getPolynomialTerms().forEach( monomial -> {
+		if (monomial.exponent() == 0) {
+		} else {
+		    result.add(new Monomial(monomial.coefficient() * monomial.exponent(),
+					    monomial.exponent() - 1));
+		}
+	    });
+	return new Polynomial(result);
+    }
+
     private Polynomial leadTermDivide(Polynomial poly1, Polynomial poly2) throws IllegalArgumentException {
 	List<Monomial> result = new ArrayList<>();
 	if (poly2.lead().exponent() == 0 && poly2.lead().coefficient() == 0) {

@@ -144,20 +144,6 @@ public class TestPolynomial extends TestCase{
     }
 
     @Test
-    public void testDifferentiate() {
-
-	// 15x^2 - 2x^1
-	terms = new ArrayList<>();
-	current = new Monomial(15, 2);
-	terms.add(current);
-	current = new Monomial(-2, 1);
-	terms.add(current);
-	expected = new Polynomial(terms);
-	actual = poly_p.differentiate();
-	assertEquals(expected, actual);
-    }
-
-    @Test
     public void testIntegrate() {
 
 	// 5/4x^4 - 1/3x^3 + 6x

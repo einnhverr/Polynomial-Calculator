@@ -36,19 +36,6 @@ public class Polynomial implements PolyOps {
 	this.terms = terms;
     }
 
-    public Polynomial differentiate() {
-	List<Monomial> copyThis = new ArrayList<>(terms);
-	List<Monomial> result = new ArrayList<>();
-
-	for ( Monomial term : copyThis ) {
-	    Monomial mon = term.differentiate();
-	    result.add(mon);
-	}
-	Polynomial pResult = new Polynomial(result);
-	pResult.collapse();
-	return pResult;
-    }
-
     public Polynomial integrate() {
 	List<Monomial> copyThis = new ArrayList<>(terms);
 	List<Monomial> result = new ArrayList<>();

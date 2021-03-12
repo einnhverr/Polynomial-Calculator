@@ -199,10 +199,10 @@ public class PolynomialController {
 		return;
 	    }
 	    if ( switchSelection ) {
-		result = poly1.differentiate();
+		result = op.differentiate(poly1);
 
 	    } else {
-		result = poly2.differentiate();
+		result = op.differentiate(poly2);
 	    }
 	    view.setResult(result.toString());
 	}

@@ -673,4 +673,30 @@ public class TestPolynomialOperations extends TestCase {
 	assertEquals(expected.getValue0(), actual.getValue0());
 	assertEquals(expected.getValue1(), actual.getValue1());
     }
+
+    @Test
+    public void testDifferentiate_p() {
+
+	// 15x^2 - 2x
+	terms = new ArrayList<>();
+	current = new Monomial(15, 2);
+	terms.add(current);
+	current = new Monomial(-2, 1);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.differentiate(poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testDifferentiate_q() {
+
+	// 1
+	terms = new ArrayList<>();
+	current = new Monomial(1, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.differentiate(poly_q);
+	assertEquals(expected, actual);
+    }
 }
