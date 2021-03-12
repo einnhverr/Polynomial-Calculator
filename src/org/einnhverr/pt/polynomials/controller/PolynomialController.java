@@ -24,8 +24,8 @@ import org.javatuples.Pair;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PolynomialController {
 
@@ -63,64 +63,43 @@ public class PolynomialController {
     }
 
     private boolean queryData() {
-	boolean match = false;
+	Pattern pattern = Pattern.compile("([+-]?\\d*)[xX]\\^(\\d+)?|([+-]?\\d*)[xX]|([+-]?\\d+)");
+	Matcher matcher;
 
 	try {
 	    sPoly1 = view.getFirstOperand();
+	    if (sPoly1.length() == 0) {
+		view.showError("Please enter 1st Polynomial!");
+		return false;
+	    }
 	} catch (NullPointerException e) {
 	    view.showError("Please enter 1st Polynomial!");
 	    return false;
 	}
 	try {
 	    sPoly2 = view.getSecondOperand();
+	    if (sPoly2.length() == 0) {
+		view.showError("Please enter 2nd Polynomial!");
+		return false;
+	    }
 	} catch (NullPointerException e) {
 	    view.showError("Please enter 2nd Polynomial!");
 	    return false;
 	}
 
-	if (sPoly1.matches("[0-9].[0-9]") || sPoly2.matches("[0-9].[0-9]")) {
-	    view.showError("Only integer polynomials supported!");
+	if (!pattern.matcher(sPoly1).find()) {
+	    view.showError("Please check 1st Polynomial format!\n" +
+			   "Expected format: aX^n+bX^n-1");
 	    return false;
 	} else {
-	    String[] sTemp;
-	    sTemp = sPoly1.split(",");
-	    Monomial current;
-	    List<Monomial> terms = new ArrayList<>();
-	    for (int i = 0; i < sTemp.length; i++) {
-		try {
-		    current = new Monomial(Integer.valueOf(sTemp[i]), i);
-		    terms.add(current);
-		} catch (NumberFormatException e) {
-		    view.showError("Please check 1st Polynomial coefficients!");
-		    return false;
-		}
-	    }
-	    if (match = sPoly1.matches(",")) {
-		view.showError("Please check 1st Polynomial format!");
-	    }
-	    poly1 = new Polynomial(terms);
+	    poly1 = new Polynomial(sPoly1);
 	}
-	if (sPoly2.matches("[0-9].[0-9]") || sPoly2.matches("[0-9].[0-9]")) {
-	    view.showError("Only integer polynomials supported!");
+	if (!pattern.matcher(sPoly2).find()) {
+	    view.showError("Please check 2nd Polynomial format!\n" +
+			   "Expected format: aX^n+bX^n-1");
 	    return false;
 	} else {
-	    String[] sTemp;
-	    sTemp = sPoly2.split(",");
-	    Monomial current;
-	    List<Monomial> terms = new ArrayList<>();
-	    for (int i = 0; i < sTemp.length; i++) {
-		try {
-		    current = new Monomial(new Integer(sTemp[i]), new Integer(i));
-		    terms.add(current);
-		} catch (NumberFormatException e) {
-		    view.showError("Please check 2nd Polynomial coefficients!");
-		    return false;
-		}
-	    }
-	    if (match = sPoly2.matches(",")) {
-		view.showError("Please check 2nd Polynomial format!");
-	    }
-	    poly2 = new Polynomial(terms);
+	    poly2 = new Polynomial(sPoly2);
 	}
 	return true;
     }
