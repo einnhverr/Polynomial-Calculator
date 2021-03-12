@@ -33,14 +33,6 @@ public interface PolyOps {
      * @param poly - which polynomial it adds with
      * @return the resulting polynomial
      */
-    public Polynomial add(Polynomial poly);
-
-    /**
-     * This method subtracts the current polynomial
-     *
-     * @param poly - which polynomial it subtracts with
-     * @return the resulting polynomial
-     */
     public Polynomial subtract(Polynomial poly);
 
     /**

@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.javatuples.Pair;
-
-public class TestPolynomial extends TestCase{
+public class TestPolynomialOperations extends TestCase {
 
     Polynomial emptyZero;
     Polynomial zero;
@@ -131,7 +129,7 @@ public class TestPolynomial extends TestCase{
     }
 
     @After
-    public void tearDown() {
+    public void teadDown() {
 	emptyZero = null;
 	zero = null;
 	poly_p = null;
@@ -144,204 +142,150 @@ public class TestPolynomial extends TestCase{
     }
 
     @Test
-    public void testSubtraction() {
-	// 5x^3 - x^2 - x + 10
+    public void testAddition_q_less_than_p() {
+
+	// 5x^3 - x^2 + x + 2
 	terms = new ArrayList<>();
 	current = new Monomial(5, 3);
 	terms.add(current);
 	current = new Monomial(-1, 2);
 	terms.add(current);
-	current = new Monomial(-1, 1);
+	current = new Monomial(1, 1);
 	terms.add(current);
-	current = new Monomial(10, 0);
+	current = new Monomial(2, 0);
 	terms.add(current);
 	expected = new Polynomial(terms);
-	actual = poly_p.subtract(poly_q);
+	actual = op.add(poly_p, poly_q);
 	assertEquals(expected, actual);
     }
 
     @Test
-    public void testMultiplication() {
-	// 5x^4 - 19x^3 + 4x^2 + 6x - 24
+    public void testAddition_p_less_than_q() {
+
+	// 5x^3 - x^2 + x + 2
 	terms = new ArrayList<>();
-	current = new Monomial(5, 4);
+	current = new Monomial(5, 3);
 	terms.add(current);
-	current = new Monomial(-21, 3);
+	current = new Monomial(-1, 2);
 	terms.add(current);
-	current = new Monomial(4, 2);
+	current = new Monomial(1, 1);
 	terms.add(current);
-	current = new Monomial(6, 1);
-	terms.add(current);
-	current = new Monomial(-24, 0);
+	current = new Monomial(2, 0);
 	terms.add(current);
 	expected = new Polynomial(terms);
-	actual = poly_p.multiply(poly_q);
+	actual = op.add(poly_q, poly_p);
 	assertEquals(expected, actual);
     }
 
     @Test
-    public void testDivision() {
-	// x^2 - 9x - 10
+    public void testAddition_p_equals_q() {
+
+	// 10X^3 - 2X^2 + 12
 	terms = new ArrayList<>();
+	current = new Monomial(10, 3);
+	terms.add(current);
+	current = new Monomial(-2, 2);
+	terms.add(current);
+	current = new Monomial(12, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.add(poly_p, poly_p);
+	assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAddition_p_positive_q_negative() {
+
+	// 5x^3 + x^2 - x + 2
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
 	current = new Monomial(1, 2);
 	terms.add(current);
-	current = new Monomial(-9, 1);
+	current = new Monomial(-1, 1);
 	terms.add(current);
-	current = new Monomial(-10, 0);
+	current = new Monomial(2, 0);
 	terms.add(current);
-	Polynomial dividend = new Polynomial(terms);
-
-	// x - 1
-	terms = new ArrayList<>();
-	current = new Monomial(1, 1);
-	terms.add(current);
-	current = new Monomial(1, 0);
-	terms.add(current);
-	Polynomial divisor = new Polynomial(terms);
-
-	// x - 10
-	terms = new ArrayList<>();
-	current = new Monomial(1, 1);
-	terms.add(current);
-	current = new Monomial(-10, 0);
-	terms.add(current);
-	Polynomial quotient = new Polynomial(terms);
-
-	// zero
-	Polynomial remainder = zero;
-	Pair<Polynomial,Polynomial> expected;
-	expected = Pair.with(quotient,remainder);
-	Pair<Polynomial,Polynomial> actual;
-	actual = dividend.divide(divisor);
-	assertEquals(expected.toString(), actual.toString());
+	expected = new Polynomial(terms);
+	actual = op.add(poly_positive, poly_negative);
+	assertEquals(expected, actual);
     }
 
     @Test
-    public void testDivision_odd() {
+    public void testAddition_p_negative_q_positive() {
 
-	// q = 4x^2 - x - 7
+	// 5x^3 + x^2 - x + 2
 	terms = new ArrayList<>();
-	current = new Monomial(4, 2);
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(1, 2);
 	terms.add(current);
 	current = new Monomial(-1, 1);
 	terms.add(current);
-	current = new Monomial(-7, 0);
-	terms.add(current);
-	Polynomial quotient = new Polynomial(terms);
-
-	// r = 11x^1 + 15
-	terms = new ArrayList<>();
-	current = new Monomial(11, 1);
-	terms.add(current);
-	current = new Monomial(15, 0);
-	terms.add(current);
-	Polynomial remainder = new Polynomial(terms);
-
-	Pair<Polynomial,Polynomial> expected;
-	expected = Pair.with(quotient, remainder);
-	Pair<Polynomial,Polynomial> actual;
-	actual = poly_x.divide(poly_y);
-	assertEquals(expected.toString(), actual.toString());
-    }
-
-    @Test
-    public void testDifferentiate() {
-
-	// 15x^2 - 2x^1
-	terms = new ArrayList<>();
-	current = new Monomial(15, 2);
-	terms.add(current);
-	current = new Monomial(-2, 1);
+	current = new Monomial(2, 0);
 	terms.add(current);
 	expected = new Polynomial(terms);
-	actual = poly_p.differentiate();
+	actual = op.add(poly_negative, poly_positive);
 	assertEquals(expected, actual);
     }
 
     @Test
-    public void testIntegrate() {
+    public void testAddition_p_zero_q_nonzero() {
 
-	// 5/4x^4 - 1/3x^3 + 6x
+	// x^1 - 4
 	terms = new ArrayList<>();
-	current = new Monomial(5.0/4.0, 4);
+	current = new Monomial(1, 1);
 	terms.add(current);
-	current = new Monomial(-1.0/3.0, 3);
-	terms.add(current);
-	current = new Monomial(6, 1);
+	current = new Monomial(-4, 0);
 	terms.add(current);
 	expected = new Polynomial(terms);
-	actual = poly_p.integrate();
+	actual = op.add(emptyZero, poly_q);
 	assertEquals(expected, actual);
     }
 
     @Test
-    public void testZero() {
-	assertTrue(emptyZero.isZero());
-	assertTrue(zero.isZero());
-    }
+    public void testAddition_p_nonzero_q_zero() {
 
-    @Test
-    public void testDegree() {
 	// 5x^3 - x^2 + 6
-	int expected = 3;
-	int actual = poly_p.degree();
+	terms = new ArrayList<>();
+	current = new Monomial(5, 3);
+	terms.add(current);
+	current = new Monomial(-1, 2);
+	terms.add(current);
+	current = new Monomial(6, 0);
+	terms.add(current);
+	expected = new Polynomial(terms);
+	actual = op.add(poly_p, emptyZero);
 	assertEquals(expected, actual);
     }
 
     @Test
-    public void testEquals() {
-	// 5x^3 - x^2 + 6
-	terms = new ArrayList<>();
-	current = new Monomial(5, 3);
-	terms.add(current);
-	current = new Monomial(-1, 2);
-	terms.add(current);
-	current = new Monomial(6, 0);
-	terms.add(current);
-	Polynomial one = new Polynomial(terms);
+    public void testAddition_p_one_q_notone() {
 
-	// 5x^3 - x^2 + 6
+	// x^1 - 3
 	terms = new ArrayList<>();
-	current = new Monomial(5, 3);
+	current = new Monomial(1, 1);
 	terms.add(current);
-	current = new Monomial(-1, 2);
+	current = new Monomial(-3, 0);
 	terms.add(current);
-	current = new Monomial(6, 0);
-	terms.add(current);
-	Polynomial two = new Polynomial(terms);
-	assertEquals(one,two);
-
-	// -X^2 + 5x^3 + 6
-	terms = new ArrayList<>();
-	current = new Monomial(-1, 2);
-	terms.add(current);
-	current = new Monomial(5, 3);
-	terms.add(current);
-	current = new Monomial(6, 0);
-	terms.add(current);
-	Collections.sort(terms);
-	Collections.reverse(terms);
-	Polynomial three = new Polynomial(terms);
-	assertEquals(two,three);
+	expected = new Polynomial(terms);
+	actual = op.add(poly_one, poly_q);
+	assertEquals(expected, actual);
     }
 
     @Test
-    public void testToString() {
-	// 3x^3 + 4x^3 - 2x^1 + 3x^1 + 6 - 7
+    public void testAddition_p_notone_q_one() {
+
+	// 5x^3 - x^2 + 7
 	terms = new ArrayList<>();
-	current = new Monomial(3, 3);
+	current = new Monomial(5, 3);
 	terms.add(current);
-	current = new Monomial(4, 3);
+	current = new Monomial(-1, 2);
 	terms.add(current);
-	current = new Monomial(-2, 1);
+	current = new Monomial(7, 0);
 	terms.add(current);
-	current = new Monomial(3, 1);
-	terms.add(current);
-	current = new Monomial(6, 0);
-	terms.add(current);
-	current = new Monomial(-7, 0);
-	terms.add(current);
-	Polynomial poly = new Polynomial(terms);
-	assertEquals("+7.00X^3+X^1-1.00X^0", poly.toString());
+	expected = new Polynomial(terms);
+	actual = op.add(poly_p, poly_one);
+	assertEquals(expected, actual);
     }
 }

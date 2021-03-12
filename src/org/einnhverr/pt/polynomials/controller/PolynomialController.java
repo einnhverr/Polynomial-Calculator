@@ -18,6 +18,7 @@ package org.einnhverr.pt.polynomials.controller;
 
 import org.einnhverr.pt.polynomials.model.Monomial;
 import org.einnhverr.pt.polynomials.model.Polynomial;
+import org.einnhverr.pt.polynomials.model.PolynomialOperations;
 import org.einnhverr.pt.polynomials.view.GUI;
 import org.javatuples.Pair;
 
@@ -30,7 +31,9 @@ public class PolynomialController {
 
     // view
     private GUI view;
+
     // model
+    private PolynomialOperations op;
     private Polynomial poly1;
     private Polynomial poly2;
     private Polynomial result;
@@ -54,6 +57,9 @@ public class PolynomialController {
 
 	// set initial operand order
 	switchSelection = view.getInitialOperandOrder();
+
+	// Initialize model
+	op = new PolynomialOperations();
     }
 
     private boolean queryData() {
@@ -125,10 +131,9 @@ public class PolynomialController {
 		return;
 	    }
 	    if ( switchSelection ) {
-		result = poly1.add(poly2);
-
+		result = op.add(poly1, poly2);
 	    } else {
-		result = poly2.add(poly1);
+		result = op.add(poly2, poly1);
 	    }
 	    view.setResult(result.toString());
 	}

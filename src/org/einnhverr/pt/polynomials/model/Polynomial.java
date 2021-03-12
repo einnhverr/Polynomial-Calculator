@@ -35,31 +35,6 @@ public class Polynomial implements PolyOps {
 	this.terms = terms;
     }
 
-    public Polynomial add(Polynomial poly) {
-	List<Monomial> polyCopy = new ArrayList<>(poly.terms);
-	List<Monomial> thisCopy = new ArrayList<>(terms);
-	List<Monomial> polyVisited = new ArrayList<>();
-	List<Monomial> thisVisited = new ArrayList<>();
-	List<Monomial> result = new ArrayList<>();
-
-	thisCopy.forEach( first -> {
-		polyCopy.forEach( second -> {
-			if ( first.exponent() == second.exponent() ) {
-			    result.add(first.add(second));
-			    thisVisited.add(first);
-			    polyVisited.add(second);
-			}
-		    });
-	    });
-	thisCopy.removeAll(thisVisited);
-	polyCopy.removeAll(polyVisited);
-	result.addAll(polyCopy);
-	result.addAll(thisCopy);
-	Polynomial pResult =new Polynomial(result);
-	pResult.collapse();
-	return pResult;
-    }
-
     public Polynomial subtract(Polynomial poly) {
 	List<Monomial> polyCopy = new ArrayList<>();
 	List<Monomial> thisCopy = new ArrayList<>(terms);
@@ -123,7 +98,8 @@ public class Polynomial implements PolyOps {
 	remainder = dividend;
 	while ( !remainder.isZero() && (remainder.degree() >= poly.degree()) ) {
 	    temp = remainder.singleTermDivide(divisor);
-	    quotient = quotient.add(temp);
+	    // WIP
+	    //quotient = quotient.add(temp);
 	    remainder = remainder.subtract(temp.multiply(divisor));
 	}
 	quotient.collapse();
@@ -215,7 +191,12 @@ public class Polynomial implements PolyOps {
 	return lead;
     }
 
-    private void collapse() {
+    public List<Monomial> getPolynomialTerms()
+    {
+	return this.terms;
+    }
+
+    public void collapse() {
 	List<Monomial> visited = new ArrayList<>();
 	List<Monomial> zero = new ArrayList<>();
 	List<Monomial> result = new ArrayList<>();
