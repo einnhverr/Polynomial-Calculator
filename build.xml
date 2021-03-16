@@ -2,16 +2,16 @@
 <project xmlns:ivy="antlib:org.apache.ivy.ant"
 	 name="Polynomials" basedir="." default="main">
 
-  <property name="src.dir" value="src"/>
+  <property name="src.dir" value="src/main/java"/>
 
   <property name="build.dir" value="build"/>
   <property name="classes.dir" value="${build.dir}/classes"/>
-  <property name="view.dir" value="org/einnhverr/pt/polynomials/view"/>
-  <property name="model.dir" value="org/einnhverr/pt/polynomials/model"/>
-  <property name="controller.dir" value="org/einnhverr/pt/polynomials/controller"/>
+  <property name="view.dir" value="ch/einnhverr/pt/polynomials/view"/>
+  <property name="model.dir" value="ch/einnhverr/pt/polynomials/model"/>
+  <property name="controller.dir" value="ch/einnhverr/pt/polynomials/controller"/>
   <property name="jar.dir" value="${build.dir}/jar"/>
   <property name="lib.dir" value="lib"/>
-  <property name="test.dir" value="test"/>
+  <property name="test.dir" value="src/test/java"/>
   <property name="report.dir" value="reports"/>
 
   <property name="main-class" value="PolynomialApplication"/>

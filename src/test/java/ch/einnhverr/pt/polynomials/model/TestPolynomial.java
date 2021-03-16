@@ -14,9 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import org.einnhverr.pt.polynomials.model.Monomial;
-import org.einnhverr.pt.polynomials.model.Polynomial;
-import org.einnhverr.pt.polynomials.model.PolynomialOperations;
+package ch.einnhverr.pt.polynomials.model;
 
 import static org.junit.Assert.*;
 import junit.framework.TestCase;

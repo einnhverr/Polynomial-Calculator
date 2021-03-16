@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.einnhverr.pt.polynomials.model;
+package ch.einnhverr.pt.polynomials.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
 
 /**
  * The class Polynomial represents a polynomial.

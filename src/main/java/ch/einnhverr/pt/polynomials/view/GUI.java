@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.einnhverr.pt.polynomials.view;
+package ch.einnhverr.pt.polynomials.view;
 
-import org.einnhverr.pt.polynomials.model.Monomial;
-import org.einnhverr.pt.polynomials.model.Polynomial;
+import ch.einnhverr.pt.polynomials.model.Monomial;
+import ch.einnhverr.pt.polynomials.model.Polynomial;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
