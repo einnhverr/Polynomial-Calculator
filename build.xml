@@ -60,7 +60,9 @@
   <target name="compile" depends="resolve">
     <mkdir dir="${classes.dir}"/>
     <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"
-	   includeantruntime="false" debug="true" debuglevel="lines,vars,source"/>
+	   includeantruntime="false" debug="true" debuglevel="lines,vars,source">
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac>
   </target>
 
   <target name="jar" depends="compile">

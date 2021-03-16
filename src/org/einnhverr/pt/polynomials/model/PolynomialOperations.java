@@ -144,7 +144,7 @@ public class PolynomialOperations {
 	}
 	leadDivisor = divisor.lead();
 
-	result = new Pair(quotient, remainder);
+	result = new Pair<>(quotient, remainder);
 	while (!remainder.isZero() && (remainder.degree() >= divisor.degree())) {
 	    temp = leadTermDivide(remainder, divisor);
 	    quotient = add(quotient, temp);
@@ -152,7 +152,7 @@ public class PolynomialOperations {
 	}
 	quotient.collapse();
 	remainder.collapse();
-	result = new Pair(quotient, remainder);
+	result = new Pair<>(quotient, remainder);
 	return result;
     }
 
