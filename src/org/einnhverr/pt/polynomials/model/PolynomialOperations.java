@@ -176,9 +176,9 @@ public class PolynomialOperations {
     }
 
     /**
-     * This method integrate a polynomial
+     * This method integrates a polynomial
      *
-     * @param polynomial - the inpus polynomial
+     * @param polynomial - the inputs polynomial
      * @return the resulting integrated polynomial
      */
     public Polynomial integrate(Polynomial polynomial) {
