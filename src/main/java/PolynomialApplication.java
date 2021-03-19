@@ -14,8 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ch.einnhverr.pt.polynomials.controller;
-
+import ch.einnhverr.pt.polynomials.controller.PolynomialController;
 import ch.einnhverr.pt.polynomials.view.GUI;
 
 public class PolynomialApplication {

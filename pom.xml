@@ -96,7 +96,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>ch.einnhverr.pt.polynomials.controller.PolynomialApplication</mainClass>
+              <mainClass>PolynomialApplication</mainClass>
             </manifest>
           </archive>
 	</configuration>
@@ -113,7 +113,7 @@
 	    <configuration>
 	      <transformers>
 		<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-		  <mainClass>ch.einnhverr.pt.polynomials.controller.PolynomialApplication</mainClass>
+		  <mainClass>PolynomialApplication</mainClass>
 		</transformer>
 	      </transformers>
 	    </configuration>
