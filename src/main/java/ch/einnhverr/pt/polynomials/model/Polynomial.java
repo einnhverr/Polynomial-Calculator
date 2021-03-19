@@ -88,6 +88,11 @@ public class Polynomial {
 	return false;
     }
 
+    @Override
+    public int hashCode() {
+	return Objects.hash(terms);
+    }
+
     public Monomial lead() {
 	Monomial lead = terms.get(0);
 	for (Monomial term : terms) {
