@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,18 @@
  */
 package ch.einnhverr.pt.polynomials.model;
 
-import static org.junit.Assert.*;
-import junit.framework.TestCase;
-import org.junit.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TestPolynomial extends TestCase{
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class TestPolynomial {
 
     Polynomial emptyZero;
     Polynomial zero;
@@ -45,7 +48,7 @@ public class TestPolynomial extends TestCase{
     Monomial current;
     List<Monomial> terms;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 	// Operations initialization
 	op = new PolynomialOperations();
@@ -127,7 +130,7 @@ public class TestPolynomial extends TestCase{
 	poly_y = new Polynomial(terms);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 	emptyZero = null;
 	zero = null;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,20 @@
  */
 package ch.einnhverr.pt.polynomials.model;
 
-import static org.junit.Assert.*;
-import junit.framework.TestCase;
-import org.junit.*;
+import org.javatuples.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.javatuples.Pair;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class TestPolynomialOperations extends TestCase {
+public class TestPolynomialOperations {
 
     Polynomial emptyZero;
     Polynomial zero;
@@ -47,7 +50,7 @@ public class TestPolynomialOperations extends TestCase {
     Monomial current;
     List<Monomial> terms;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 	// Operations initialization
 	op = new PolynomialOperations();
@@ -129,8 +132,8 @@ public class TestPolynomialOperations extends TestCase {
 	poly_y = new Polynomial(terms);
     }
 
-    @After
-    public void teadDown() {
+    @AfterEach
+    public void tearDown() {
 	emptyZero = null;
 	zero = null;
 	poly_p = null;
@@ -605,22 +608,20 @@ public class TestPolynomialOperations extends TestCase {
 
     @Test
     public void testDivision_p_nonzero_q_emptyZero() {
-	try {
-	    op.divide(poly_p, emptyZero);
-	    fail("Expected an IllegalArgumentException to be thrown");
-	} catch (IllegalArgumentException e) {
-	    assertTrue(true);
-	}
+	Exception exception;
+	exception = assertThrows(IllegalArgumentException.class, () -> {
+		op.divide(poly_p, emptyZero);
+	    });
+	assertEquals("Divisor polynomial should not be zero(0)!", exception.getMessage());
     }
 
     @Test
     public void testDivision_p_nonzero_q_zero() {
-	try {
-	    op.divide(poly_p, zero);
-	    fail("Expected an IllegalArgumentException to be thrown");
-	} catch (IllegalArgumentException e) {
-	    assertTrue(true);
-	}
+	Exception exception;
+	exception = assertThrows(IllegalArgumentException.class, () -> {
+		op.divide(poly_p, zero);
+	    });
+	assertEquals("Divisor polynomial should not be zero(0)!", exception.getMessage());
     }
 
     @Test
