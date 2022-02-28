@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package ch.einnhverr.pt.polynomials;
+
 import ch.einnhverr.pt.polynomials.controller.PolynomialController;
 import ch.einnhverr.pt.polynomials.view.GUI;
 
