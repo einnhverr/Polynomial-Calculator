@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ public class PolynomialOperations {
      * @param poly2 - second polynomial
      * @return a (Quotient, Remainder) pair of polynomials
      */
-    public Pair<Polynomial, Polynomial> divide(Polynomial poly1, Polynomial poly2) throws IllegalArgumentException {
+    public Pair<Polynomial, Polynomial> divide(Polynomial poly1, Polynomial poly2) throws ArithmeticException {
 	Polynomial dividend = poly1;
 	Polynomial divisor = poly2;
 	Polynomial quotient;
@@ -131,7 +131,7 @@ public class PolynomialOperations {
 	Monomial leadDivisor;
 
 	if (divisor.isZero()) {
-	    throw new IllegalArgumentException("Divisor polynomial should not be zero(0)!");
+	    throw new ArithmeticException("Divisor polynomial should not be zero(0)!");
 	}
 	List<Monomial> zeroTerms = new ArrayList<>();
 	zeroTerms.add(new Monomial(0, 0));
@@ -191,10 +191,10 @@ public class PolynomialOperations {
 	return new Polynomial(result);
     }
 
-    private Polynomial leadTermDivide(Polynomial poly1, Polynomial poly2) throws IllegalArgumentException {
+    private Polynomial leadTermDivide(Polynomial poly1, Polynomial poly2) throws ArithmeticException {
 	List<Monomial> result = new ArrayList<>();
 	if (poly2.lead().exponent() == 0 && poly2.lead().coefficient() == 0) {
-	    throw new IllegalArgumentException("Divisor lead should not be zero(0)!");
+	    throw new ArithmeticException("Divisor lead should not be zero(0)!");
 	}
 	result.add(new Monomial(poly1.lead().coefficient() / poly2.lead().coefficient(),
 				poly1.lead().exponent() - poly2.lead().exponent()));

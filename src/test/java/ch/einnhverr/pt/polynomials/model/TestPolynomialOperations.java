@@ -609,19 +609,17 @@ public class TestPolynomialOperations {
     @Test
     public void testDivision_p_nonzero_q_emptyZero() {
 	Exception exception;
-	exception = assertThrows(IllegalArgumentException.class, () -> {
+	exception = assertThrows(ArithmeticException.class, () -> {
 		op.divide(poly_p, emptyZero);
 	    });
-	assertEquals("Divisor polynomial should not be zero(0)!", exception.getMessage());
     }
 
     @Test
     public void testDivision_p_nonzero_q_zero() {
 	Exception exception;
-	exception = assertThrows(IllegalArgumentException.class, () -> {
+	exception = assertThrows(ArithmeticException.class, () -> {
 		op.divide(poly_p, zero);
 	    });
-	assertEquals("Divisor polynomial should not be zero(0)!", exception.getMessage());
     }
 
     @Test

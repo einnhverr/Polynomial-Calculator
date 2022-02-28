@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,14 +156,14 @@ public class PolynomialController {
 	    if ( switchSelection ) {
 		try {
 		    resultD = op.divide(poly1, poly2);
-		} catch (IllegalArgumentException ex) {
+		} catch (ArithmeticException ex) {
 		    view.showError(ex.getMessage());
 		    return;
 		}
 	    } else {
 		try {
 		    resultD = op.divide(poly2, poly1);
-		} catch (IllegalArgumentException ex) {
+		} catch (ArithmeticException ex) {
 		    view.showError(ex.getMessage());
 		    return;
 		}
