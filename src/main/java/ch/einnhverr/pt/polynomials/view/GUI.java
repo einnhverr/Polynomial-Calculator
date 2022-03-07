@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Erhard Muresan.
+ * Copyright (c) 2021,2022 Erhard Muresan.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,6 +185,8 @@ public class GUI extends JFrame {
 
     public void addOperandSelectionListener(ActionListener listener) {
 	firstOpSecond.addActionListener(listener);
+	firstOpSecond.setActionCommand("firstOperand");
 	secondOpFirst.addActionListener(listener);
+	secondOpFirst.setActionCommand("secondOperand");
     }
 }

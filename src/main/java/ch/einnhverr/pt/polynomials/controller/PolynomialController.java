@@ -63,7 +63,7 @@ public class PolynomialController {
 	op = new PolynomialOperations();
     }
 
-    private boolean queryData() {
+    private boolean queryFirstOperand() {
 	Pattern pattern = Pattern.compile("([+-]?\\d*)[xX]\\^(\\d+)?|([+-]?\\d*)[xX]|([+-]?\\d+)");
 	Matcher matcher;
 
@@ -77,6 +77,22 @@ public class PolynomialController {
 	    view.showError("Please enter 1st Polynomial!");
 	    return false;
 	}
+
+	if (!pattern.matcher(sPoly1).find()) {
+	    view.showError("Please check 1st Polynomial format!\n" +
+			   "Expected format: aX^n+bX^n-1");
+	    return false;
+	} else {
+	    poly1 = new Polynomial(sPoly1);
+	}
+
+	return true;
+    }
+
+    private boolean querySecondOperand() {
+	Pattern pattern = Pattern.compile("([+-]?\\d*)[xX]\\^(\\d+)?|([+-]?\\d*)[xX]|([+-]?\\d+)");
+	Matcher matcher;
+
 	try {
 	    sPoly2 = view.getSecondOperand();
 	    if (sPoly2.length() == 0) {
@@ -88,13 +104,6 @@ public class PolynomialController {
 	    return false;
 	}
 
-	if (!pattern.matcher(sPoly1).find()) {
-	    view.showError("Please check 1st Polynomial format!\n" +
-			   "Expected format: aX^n+bX^n-1");
-	    return false;
-	} else {
-	    poly1 = new Polynomial(sPoly1);
-	}
 	if (!pattern.matcher(sPoly2).find()) {
 	    view.showError("Please check 2nd Polynomial format!\n" +
 			   "Expected format: aX^n+bX^n-1");
@@ -102,12 +111,13 @@ public class PolynomialController {
 	} else {
 	    poly2 = new Polynomial(sPoly2);
 	}
+
 	return true;
     }
 
     class AddPolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if( !queryData() ) {
+	    if( !(queryFirstOperand() && querySecondOperand()) ) {
 		return;
 	    }
 	    if ( switchSelection ) {
@@ -121,7 +131,7 @@ public class PolynomialController {
 
     class SubtractPolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if ( !queryData() ) {
+	    if ( !(queryFirstOperand() && querySecondOperand()) ) {
 		return;
 	    }
 	    if ( switchSelection ) {
@@ -135,7 +145,7 @@ public class PolynomialController {
 
     class MultiplyPolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if ( !queryData() ) {
+	    if ( !(queryFirstOperand() && querySecondOperand()) ) {
 		return;
 	    }
 	    if ( switchSelection ) {
@@ -149,7 +159,7 @@ public class PolynomialController {
 
     class DividePolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if ( !queryData() ) {
+	    if ( !(queryFirstOperand() && querySecondOperand()) ) {
 		return;
 	    }
 	    Pair<Polynomial,Polynomial> resultD;
@@ -175,13 +185,16 @@ public class PolynomialController {
 
     class DifferentiatePolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if ( !queryData() ) {
-		return;
-	    }
 	    if ( switchSelection ) {
+		if ( !queryFirstOperand() ) {
+		    return;
+		}
 		result = op.differentiate(poly1);
-
-	    } else {
+	    }
+	    else {
+		if ( !querySecondOperand() ) {
+		    return;
+		}
 		result = op.differentiate(poly2);
 	    }
 	    view.setResult(result.toString());
@@ -190,12 +203,16 @@ public class PolynomialController {
 
     class IntegratePolynomialListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    if ( !queryData() ) {
-		return;
-	    }
 	    if ( switchSelection ) {
+		if ( !queryFirstOperand() ) {
+		    return;
+		}
 		result = op.integrate(poly1);
-	    } else {
+	    }
+	    else {
+		if ( !querySecondOperand() ) {
+		    return;
+		}
 		result = op.integrate(poly2);
 	    }
 	    view.setResult(result.toString());
@@ -204,7 +221,12 @@ public class PolynomialController {
 
     class OperandSelectionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    switchSelection = !switchSelection;
+	    if (e.getActionCommand().equals("firstOperand")) {
+		switchSelection = true;
+	    }
+	    if (e.getActionCommand().equals("secondOperand")) {
+		switchSelection = false;
+	    }
 	}
     }
 }
